@@ -1,0 +1,47 @@
+const gift = document.getElementById("gift");
+const lid = document.querySelector(".lid");
+const mensagemDiv = document.getElementById("mensagem");
+const promocaoDiv = document.getElementById("promocao");
+
+let aberto = false;
+let cliqueCount = 0;
+
+const mensagens = [
+  "Recado especial!!",
+  "Preparamos um mimo especial para você! Aproveite!",
+  "Venha renovar sua autoestima e beleza. Aqui nossa prioridade é seu bem-estar. Agende seu horário e receba seu bônus especial."
+];
+
+gift.addEventListener("click", () => {
+  // Animação de abertura/fechamento
+  if (!aberto) {
+    lid.style.transform = "rotateX(-110deg)";
+    aberto = true;
+  } else {
+    lid.style.transform = "rotateX(0deg)";
+    aberto = false;
+    // Esconde mensagens ao fechar
+    mensagemDiv.classList.add("oculto");
+    return; // Não mostra mensagem ao fechar
+  }
+
+  // Lógica para mensagens sequenciais (apenas ao abrir)
+  if (cliqueCount < mensagens.length) {
+    setTimeout(() => {
+      mensagemDiv.textContent = mensagens[cliqueCount];
+      mensagemDiv.classList.remove("oculto");
+      setTimeout(() => {
+        mensagemDiv.classList.add("oculto");
+      }, 3000); // Mensagem some após 3 segundos
+    }, 1000); // Após a animação de abertura
+  }
+
+  cliqueCount++;
+
+  // Recompensa no terceiro clique (promoção do salão)
+  if (cliqueCount === 3) {
+    setTimeout(() => {
+      promocaoDiv.classList.remove("oculto");
+    }, 2000); // Aparece após a mensagem
+  }
+});
